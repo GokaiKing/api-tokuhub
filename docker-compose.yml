@@ -1,0 +1,15 @@
+db:
+  image: postgres:16-alpine
+  container_name: api_postgres_db
+  environment:
+    POSTGRES_USER: ${DB_USER:-admin}
+    POSTGRES_PASSWORD: ${DB_PASS:-password123}
+    POSTGRES_DB: ${DB_NAME:-tokuhub_api_db}
+  ports:
+    - "5432:5432"
+  volumes:
+    - postgres_data:/var/lib/postgresql/data
+    - ./init.sql:/docker-entrypoint-initdb.d/init.sql # Mapeo del esquema inicial
+
+volumes:
+  postgres_data:
